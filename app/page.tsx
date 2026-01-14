@@ -2,16 +2,16 @@
 
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
-import { AuthProvider, LanguageProvider, useAuth } from "@/lib/contexts";
-import About from "@/pages/About";
-import Contact from "@/pages/Contact";
-import Home from "@/pages/Home";
-import Journal from "@/pages/Journal";
-import JournalDetail from "@/pages/JournalDetail";
-import Login from "@/pages/Login";
-import Secret from "@/pages/Secret";
-import WorkDetail from "@/pages/WorkDetail";
-import Works from "@/pages/Works";
+import { useAuth } from "@/lib/contexts";
+import About from "@/views/About";
+import Contact from "@/views/Contact";
+import Home from "@/views/Home";
+import Journal from "@/views/Journal";
+import JournalDetail from "@/views/JournalDetail";
+import Login from "@/views/Login";
+import Secret from "@/views/Secret";
+import WorkDetail from "@/views/WorkDetail";
+import Works from "@/views/Works";
 import React from "react";
 import {
   Navigate,
@@ -75,13 +75,7 @@ const AppContent: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  return (
-    <LanguageProvider>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
-    </LanguageProvider>
-  );
+  return <AppContent />;
 };
 
 export default App;

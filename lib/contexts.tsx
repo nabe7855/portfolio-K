@@ -8,9 +8,10 @@ interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
 }
-const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
-);
+const LanguageContext = createContext<LanguageContextType>({
+  lang: "ja",
+  setLang: () => {},
+});
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -24,10 +25,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useLang = () => {
-  const context = useContext(LanguageContext);
-  if (!context)
-    throw new Error("useLang must be used within a LanguageProvider");
-  return context;
+  return useContext(LanguageContext);
 };
 
 // --- Auth Context ---
@@ -37,7 +35,12 @@ interface AuthContextType {
   login: () => void;
   logout: () => void;
 }
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  isLoggedIn: false,
+  isMounted: false,
+  login: () => {},
+  logout: () => {},
+});
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -71,7 +74,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
-  return context;
+  return useContext(AuthContext);
+};
+
+// --- Unified Providers ---
+export const Providers: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return (
+    <LanguageProvider>
+      <AuthProvider>{children}</AuthProvider>
+    </LanguageProvider>
+  );
 };
